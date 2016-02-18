@@ -1,6 +1,6 @@
 {
   "name": "dockerhub2slack",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Post Docker Hub notifications to Slack",
   "author": {
     "name": "Christophe Hamerling",
