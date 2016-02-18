@@ -37,9 +37,6 @@
     "mocha": "^2.4.5",
     "mockery": "^1.4.0"
   },
-  "bin": {
-    "dockerhub2slack": "./dist/bin/index.js"
-  },
   "license": "MIT",
   "dependencies": {
     "express": "^4.13.4",

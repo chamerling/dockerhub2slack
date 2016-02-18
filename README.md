@@ -1,22 +1,30 @@
 # dockerhub2slack [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 > Docker Hub Webhooks to Slack
 
+![Channel message](/assets/slack.png?raw=true "Channel message")
+
 ## Installation
 
 ```sh
-$ git clone XXX
+$ git clone https://github.com/chamerling/dockerhub2slack.git
 $ npm install
+```
+
+or
+
+```sh
+$ npm install dockerhub2slack
 ```
 
 ## Usage
 
-1. Create an incoming Webhook on Slack integrations page, then start you dockerhub2slack service:
+Create an incoming Webhook on Slack integrations page, then start your dockerhub2slack service:
 
 ```bash
 SLACK_WEBHOOK=<YOUR_INCOMING_WEBHOOK> node dist/server/index.js
 ```
 
-2. Add webhooks to your Docker Hub repositories. The Webhook URL is your server URL with the /webhook/:channelName suffix. This means that you can define the channel you want to post message to on Docker Hub webhook call ie a call to http://<YOUR_SERVER>/webhook/docker will post a message to the \#docker channel on your Slack instance.
+Add webhooks to your Docker Hub repositories. The Webhook URL is your server URL with the /webhook/:channelName suffix. This means that you can define the channel you want to post message to on Docker Hub webhook call ie a call to http://<YOUR_SERVER>/webhook/docker will post a message to the \#docker channel on your Slack instance.
 
 ## Tests
 
