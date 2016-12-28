@@ -27,7 +27,7 @@ app.post('/webhook/:channelName', (req, res) => {
     return res.status(400).send();
   }
 
-  let msg = `Docker Repository ${req.body.repository.repo_name} updated by ${req.body.push_data.pusher}`;
+  let msg = `Docker Repository ${req.body.repository.repo_name}:${req.body.push_data.tag} updated by ${req.body.push_data.pusher}`;
 
   client.sendMessage(channel, msg, [req.body.repository.repo_url], (err) => {
     if (err) {
