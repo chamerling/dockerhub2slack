@@ -20,20 +20,24 @@ app.get('/', (req, res) => {
   res.send('DockerHub2Slack Webhooks http://github.com/chamerling/dockerhub2slack');
 });
 
-app.post('/webhook', (req, res) => {
-  if (!req.body) {
-    return res.status(400).send();
-  }
-
+function processWebhook(channel, req, res){
   let msg = `Docker Repository ${req.body.repository.repo_name}:${req.body.push_data.tag} updated by ${req.body.push_data.pusher}`;
 
-  let channel = ''
   client.sendMessage(channel, msg, [req.body.repository.repo_url], (err) => {
     if (err) {
       console.log('Error while sending message to slack', err);
     }
     res.status(200).send('ok');
   });
+}
+
+app.post('/webhook', (req, res) => {
+  if (!req.body) {
+    return res.status(400).send();
+  }
+
+  processWebhook('', req, res);
+
 });
 
 app.post('/webhook/:channelName', (req, res) => {
@@ -43,14 +47,8 @@ app.post('/webhook/:channelName', (req, res) => {
     return res.status(400).send();
   }
 
-  let msg = `Docker Repository ${req.body.repository.repo_name}:${req.body.push_data.tag} updated by ${req.body.push_data.pusher}`;
+  processWebhook(channel, req, res);
 
-  client.sendMessage(channel, msg, [req.body.repository.repo_url], (err) => {
-    if (err) {
-      console.log('Error while sending message to slack', err);
-    }
-    res.status(200).send('ok');
-  });
 });
 
 app.listen(PORT, () => {
