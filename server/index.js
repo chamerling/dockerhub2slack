@@ -20,13 +20,7 @@ app.get('/', (req, res) => {
   res.send('DockerHub2Slack Webhooks http://github.com/chamerling/dockerhub2slack');
 });
 
-app.post('/webhook/:channelName', (req, res) => {
-  let channel = req.params.channelName || DEFAULT_CHANNEL;
-
-  if (!req.body) {
-    return res.status(400).send();
-  }
-
+function processWebhook(channel, req, res){
   let msg = `Docker Repository ${req.body.repository.repo_name}:${req.body.push_data.tag} updated by ${req.body.push_data.pusher}`;
 
   client.sendMessage(channel, msg, [req.body.repository.repo_url], (err) => {
@@ -35,6 +29,26 @@ app.post('/webhook/:channelName', (req, res) => {
     }
     res.status(200).send('ok');
   });
+}
+
+app.post('/webhook', (req, res) => {
+  if (!req.body) {
+    return res.status(400).send();
+  }
+
+  processWebhook('', req, res);
+
+});
+
+app.post('/webhook/:channelName', (req, res) => {
+  let channel = req.params.channelName || DEFAULT_CHANNEL;
+
+  if (!req.body) {
+    return res.status(400).send();
+  }
+
+  processWebhook(channel, req, res);
+
 });
 
 app.listen(PORT, () => {
